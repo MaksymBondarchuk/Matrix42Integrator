@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2026
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Matrix42Integrator", "Matrix42Integrator\Matrix42Integrator.csproj", "{FF572E0F-59DD-44B5-8B6A-C1A3A2CB047D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF572E0F-59DD-44B5-8B6A-C1A3A2CB047D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF572E0F-59DD-44B5-8B6A-C1A3A2CB047D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF572E0F-59DD-44B5-8B6A-C1A3A2CB047D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF572E0F-59DD-44B5-8B6A-C1A3A2CB047D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DF1F256-824B-4159-911B-2ED2B57BA26D}
+	EndGlobalSection
+EndGlobal
