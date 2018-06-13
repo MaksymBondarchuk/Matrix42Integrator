@@ -29,52 +29,54 @@ namespace Matrix42Integrator
 		{
 			services.AddMvc();
 
-			services.AddAuthentication(options =>
-			{
-				options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-				options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-				options.DefaultChallengeScheme = "Matrix42";
-			})
-			.AddCookie()
-			.AddOAuth("Matrix42", options =>
-			{
-				options.ClientId = Configuration["Matrix42:ClientId"];
-				options.ClientSecret = Configuration["Matrix42:ClientSecret"];
-				options.Scope.Add(Configuration["Matrix42:Scope"]);
-				options.CallbackPath = new PathString("/oauth2/callback");
+			//services.AddAuthentication(options =>
+			//{
+			//	options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+			//	options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+			//	options.DefaultChallengeScheme = "Matrix42";
+			//})
+			//.AddCookie()
+			//.AddOAuth("Matrix42", options =>
+			//{
+			//	options.ClientId = Configuration["Matrix42:ClientId"];
+			//	options.ClientSecret = Configuration["Matrix42:ClientSecret"];
+			//	options.Scope.Add(Configuration["Matrix42:Scope"]);
+			//	options.CallbackPath = new PathString("/account/gettoken");
 
-				options.AuthorizationEndpoint = "https://accounts.matrix42.com/issue/oauth2/authorize";
-				options.TokenEndpoint = "https://accounts.matrix42.com/issue/oauth2/token";
-				options.UserInformationEndpoint = "https://accounts.matrix42.com/my/account";
+			//	options.AuthorizationEndpoint = "https://accounts.matrix42.com/issue/oauth2/authorize";
+			//	options.TokenEndpoint = "https://accounts.matrix42.com/issue/oauth2/token";
+			//	options.UserInformationEndpoint = "https://accounts.matrix42.com/my/account";
 
-				options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
-				options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
-				options.ClaimActions.MapJsonKey("urn:github:login", "login");
-				options.ClaimActions.MapJsonKey("urn:github:url", "html_url");
-				options.ClaimActions.MapJsonKey("urn:github:avatar", "avatar_url");
+			//	options.ClaimActions.MapJsonKey(ClaimTypes.NameIdentifier, "id");
+			//	options.ClaimActions.MapJsonKey(ClaimTypes.Name, "name");
+			//	options.ClaimActions.MapJsonKey("urn:github:login", "login");
+			//	options.ClaimActions.MapJsonKey("urn:github:url", "html_url");
+			//	options.ClaimActions.MapJsonKey("urn:github:avatar", "avatar_url");
 
-				options.Events = new OAuthEvents
-				{
-					OnCreatingTicket = async context =>
-					{
-						var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
-						request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-						request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
+			//	options.Events = new OAuthEvents
+			//	{
+			//		OnCreatingTicket = async context =>
+			//		{
+			//			var request = new HttpRequestMessage(HttpMethod.Get, context.Options.UserInformationEndpoint);
+			//			request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+			//			request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", context.AccessToken);
 
-						var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
-						response.EnsureSuccessStatusCode();
+			//			var response = await context.Backchannel.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, context.HttpContext.RequestAborted);
+			//			response.EnsureSuccessStatusCode();
 
-						var user = JObject.Parse(await response.Content.ReadAsStringAsync());
+			//			var user = JObject.Parse(await response.Content.ReadAsStringAsync());
 
-						context.RunClaimActions(user);
-					},
-					OnTicketReceived = context =>
-					{
-						Debugger.Break();
-						throw new NotImplementedException();
-					}
-				};
-			});
+			//			context.RunClaimActions(user);
+			//		},
+			//		OnTicketReceived = context =>
+			//		{
+			//			Debugger.Break();
+			//			throw new NotImplementedException();
+			//		}
+			//	};
+
+			//	options.Validate();
+			//});
 
 			//services.AddAuthentication(options =>
 			//{
