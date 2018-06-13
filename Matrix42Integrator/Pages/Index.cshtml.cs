@@ -54,7 +54,7 @@ namespace Matrix42Integrator.Pages
 				    .Select(c => c.Value);
 
 
-				var apiRequest = new HttpRequestMessage(HttpMethod.Get, "http://localhost:50388/api/orders");
+				var apiRequest = new HttpRequestMessage(HttpMethod.Get, "http://ordersservice-matrix42integrator.azurewebsites.net//api/orders");
 			    apiRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 			    apiRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
 
