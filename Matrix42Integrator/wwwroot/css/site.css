@@ -33,3 +33,7 @@ body {
         display: none;
     }
 }
+
+.main-content {
+	margin-top: 25px;
+}

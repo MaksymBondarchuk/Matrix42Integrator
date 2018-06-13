@@ -6,21 +6,15 @@
 
 <div class="row">
 	<div class="col-md-12">
-		@if (!User.Identity.IsAuthenticated)
+		@if (User.Identity.IsAuthenticated)
 		{
-			<a asp-action="SignIn" asp-controller="Account" class="btn btn-default" style="margin-top: 25px">Log In with Matrix42</a>
-		}
-		else
-		{
-			<a asp-action="SignOut" asp-controller="Account" class="btn btn-default" style="margin-top: 25px">Log Out</a>
-
-			<div class="row">
+			<div class="row main-content">
 				<div class="col-md-2">
 					<img src="@Model.AvatarUrl" alt="" class="img-thumbnail" />
 				</div>
 				<div class="col-md-10">
 					<h4>@Model.FirstName @Model.LastName</h4>
-					<h5><a href="mailto:@Model.Email"></a>@Model.Email</h5><br />
+					<h5>@Model.Email</h5><br />
 
 					@if (Model.Roles.Any())
 					{
@@ -46,6 +40,10 @@
 					}
 				</div>
 			</div>
+		}
+		else
+		{
+			<a asp-action="SignIn" asp-controller="Account" class="btn btn-default" style="margin-top: 25px">Log In with Matrix42</a>
 		}
 	</div>
 </div>

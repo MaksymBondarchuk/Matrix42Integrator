@@ -9,7 +9,6 @@ namespace OrdersService.Controllers
     public class OrdersController : ControllerBase
     {
         // GET api/orders
-        //[HttpGet("{access_token}")]
         [HttpGet]
 		[Authorize(Roles = "Matrix42.MyWorkspace.Customer")]
 		public ActionResult<IEnumerable<string>> Get()

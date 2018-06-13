@@ -30,7 +30,6 @@ namespace Matrix42Integrator.Controllers
 			return RedirectToAction("Authorize");
 		}
 
-
 		[HttpGet]
 		public IActionResult SignOut()
 		{
@@ -49,7 +48,6 @@ namespace Matrix42Integrator.Controllers
 			ClaimsPrincipal principal = ValidateToken(access_token);
 
 			await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-			//return RedirectToAction("GetUserData");
 			return Redirect("/");
 		}
 
