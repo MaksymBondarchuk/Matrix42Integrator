@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,36 +28,6 @@ namespace OrdersService
 		{
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
-			//services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-			//	.AddJwtBearer(options =>
-			//	{
-			//		options.Authority = "{yourAuthorizationServerAddress}";
-			//		options.Audience = "{yourAudience}";
-			//	});
-
-			//    services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-			//     .AddJwtBearer(options =>
-			//     {
-			//      options.TokenValidationParameters = new TokenValidationParameters
-			//      {
-			//       // Clock skew compensates for server time drift.
-			//       // We recommend 5 minutes or less:
-			//       ClockSkew = TimeSpan.FromMinutes(5),
-			//       // Specify the key used to sign the token:
-			//       //IssuerSigningKey = signingKey,
-			//       RequireSignedTokens = true,
-			//       // Ensure the token hasn't expired:
-			//       RequireExpirationTime = true,
-			//       ValidateLifetime = true,
-			//       // Ensure the token audience matches our audience value (default true):
-			//       ValidateAudience = true,
-			//       ValidAudience = "api://default",
-			//       // Ensure the token was issued by a trusted authorization server (default true):
-			//       ValidateIssuer = true,
-			//       ValidIssuer = "https://accounts.matrix42.com/issue/oauth2/authorize"
-			//};
-			//     });
-
 			string certificatePath = Path.Combine(_hostingEnvironment.ContentRootPath, "047162cd-8d52-4241-a6ce-d60339aeda6a_0b65abd1-824e-4f0c-a4f6-234848a95f0b.pem");
 			var certificate = new X509Certificate2(certificatePath);
 
@@ -72,10 +38,6 @@ namespace OrdersService
 				ValidateLifetime = false,
 				IssuerSigningKeyResolver = (t, st, i, p)
 					=> new List<SecurityKey> { new X509SecurityKey(certificate) },
-
-				//ValidAudience = "https://my-rp.com",
-				//ValidIssuer = "https://my-issuer.com/trust/issuer",
-				//RequireExpirationTime = true
 			};
 
 			services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -83,31 +45,19 @@ namespace OrdersService
 				{
 					options.TokenValidationParameters = validationParameters;
 
-					//new TokenValidationParameters
-					//      {
-					//       ValidateIssuer = false,
-					//       ValidateAudience = false,
-					//       ValidateLifetime = false,
-					//       ValidateIssuerSigningKey = false,
-
-					//       //ValidIssuer = "Fiver.Security.Bearer",
-					//       //ValidAudience = "Fiver.Security.Bearer",
-					//       //IssuerSigningKey = JwtSecurityKey.Create("fiversecret ")
-					//      };
-
-					options.Events = new JwtBearerEvents
-					{
-						OnAuthenticationFailed = context =>
-						{
-							Debugger.Break();
-							return Task.CompletedTask;
-						},
-						OnTokenValidated = context =>
-						{
-							Debugger.Break();
-							return Task.CompletedTask;
-						}
-					};
+					//options.Events = new JwtBearerEvents
+					//{
+					//	OnAuthenticationFailed = context =>
+					//	{
+					//		Debugger.Break();
+					//		return Task.CompletedTask;
+					//	},
+					//	OnTokenValidated = context =>
+					//	{
+					//		Debugger.Break();
+					//		return Task.CompletedTask;
+					//	}
+					//};
 				});
 
 		}
