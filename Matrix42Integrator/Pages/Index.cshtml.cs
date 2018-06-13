@@ -35,14 +35,7 @@ namespace Matrix42Integrator.Pages
 		    {
 				string accessToken = await HttpContext.GetTokenAsync("access_token");
 
-			    var request = new HttpRequestMessage(HttpMethod.Get, "https://accounts.matrix42.com/api/session/profile");
-				request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-				request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-				var response = await HttpClient.SendAsync(request);
-				response.EnsureSuccessStatusCode();
-
-				var user = JObject.Parse(await response.Content.ReadAsStringAsync());
+			    var user = JObject.Parse(await GetData("https://accounts.matrix42.com/api/session/profile", accessToken));
 
 			    FirstName = user.SelectToken("FirstName").Value<string>();
 			    LastName = user.SelectToken("LastName").Value<string>();
@@ -53,19 +46,22 @@ namespace Matrix42Integrator.Pages
 				    .Where(c => c.Type == ClaimTypes.Role)
 				    .Select(c => c.Value);
 
+				JArray ordersApiData = JArray.Parse(await GetData("http://ordersservice-matrix42integrator.azurewebsites.net//api/orders", accessToken));
 
-				var apiRequest = new HttpRequestMessage(HttpMethod.Get, "http://ordersservice-matrix42integrator.azurewebsites.net//api/orders");
-			    apiRequest.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-			    apiRequest.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
-
-				var apiResponse = await HttpClient.SendAsync(apiRequest);
-			    apiResponse.EnsureSuccessStatusCode();
-
-				JArray apiData = JArray.Parse(await apiResponse.Content.ReadAsStringAsync());
-
-			    Orders = apiData.ToObject<List<string>>();
+			    Orders = ordersApiData.ToObject<List<string>>();
 		    }
 	    }
 
+	    private async Task<string> GetData(string url, string accessToken)
+	    {
+		    var request = new HttpRequestMessage(HttpMethod.Get, url);
+		    request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+		    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
+
+		    var response = await HttpClient.SendAsync(request);
+		    response.EnsureSuccessStatusCode();
+
+		    return await response.Content.ReadAsStringAsync();
+		}
 	}
 }
