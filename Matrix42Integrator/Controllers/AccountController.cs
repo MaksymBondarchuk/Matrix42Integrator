@@ -1,32 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using Matrix42Integrator.SecurityLayer;
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Security.Claims;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Matrix42Integrator.Controllers
 {
 	[Route("[controller]/[action]")]
 	public class AccountController : Controller
 	{
-		private readonly IHostingEnvironment _hostingEnvironment;
-
-		public AccountController(IHostingEnvironment hostingEnvironment)
-		{
-			_hostingEnvironment = hostingEnvironment;
-		}
-
-
 		[HttpGet]
 		public IActionResult SignIn()
 		{
-			//HttpContext.SignOutAsync();
 			return RedirectToAction("Authorize");
 		}
 
@@ -55,25 +42,7 @@ namespace Matrix42Integrator.Controllers
 		{
 			var handler = new JwtSecurityTokenHandler();
 
-			string certificatePath = Path.Combine(_hostingEnvironment.WebRootPath, "047162cd-8d52-4241-a6ce-d60339aeda6a_0b65abd1-824e-4f0c-a4f6-234848a95f0b.pem");
-			var certificate = new X509Certificate2(certificatePath);
-
-			var validationParameters = new TokenValidationParameters()
-			{
-				ValidateAudience = false,
-				ValidateIssuer = false,
-				ValidateLifetime = false,
-				IssuerSigningKeyResolver = (t, st, i, p)
-					=> new List<SecurityKey> { new X509SecurityKey(certificate) },
-
-				//ValidAudience = "https://my-rp.com",
-				//ValidIssuer = "https://my-issuer.com/trust/issuer",
-				//RequireExpirationTime = true
-			};
-
-			var principal = handler.ValidateToken(token, validationParameters, out _);
-
-			return principal;
+			return handler.ValidateToken(token, JwtHandler.GetTokenValidationParameters(), out _);
 		}
 	}
 }

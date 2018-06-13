@@ -5,21 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="047162cd-8d52-4241-a6ce-d60339aeda6a_0b65abd1-824e-4f0c-a4f6-234848a95f0b.pem" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="047162cd-8d52-4241-a6ce-d60339aeda6a_0b65abd1-824e-4f0c-a4f6-234848a95f0b.pem">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Matrix42Integrator.SecurityLayer\Matrix42Integrator.SecurityLayer.csproj" />
   </ItemGroup>
 
 </Project>

@@ -13,7 +13,7 @@ namespace OrdersService.Controllers
 		[Authorize(Roles = "Matrix42.MyWorkspace.Customer")]
 		public ActionResult<IEnumerable<string>> Get()
         {
-            return new[] { "Order1", "Order2" };
+            return new[] { "Order1", "Order2", "Order3" };
         }
     }
 }
