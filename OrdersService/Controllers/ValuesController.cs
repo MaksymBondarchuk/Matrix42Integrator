@@ -9,11 +9,12 @@ namespace OrdersService.Controllers
     public class ValuesController : ControllerBase
     {
         // GET api/values
-        [HttpGet("{access_token}")]
-		//[Authorize(Roles="Matrix42.MyWorkspace.Customer")]
-        public ActionResult<IEnumerable<string>> Get(string access_token)
+        //[HttpGet("{access_token}")]
+        [HttpGet]
+		[Authorize(Roles = "Matrix42.MyWorkspace.Customer")]
+		public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new[] { "Order1", "Order2" };
         }
 
         // GET api/values/5
