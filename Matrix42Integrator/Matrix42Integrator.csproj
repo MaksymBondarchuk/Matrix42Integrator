@@ -11,6 +11,8 @@
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Matrix42Integrator.BusinessLayer\Matrix42Integrator.BusinessLayer.csproj" />
+    <ProjectReference Include="..\Matrix42Integrator.Contracts\Matrix42Integrator.Contracts.csproj" />
     <ProjectReference Include="..\Matrix42Integrator.SecurityLayer\Matrix42Integrator.SecurityLayer.csproj" />
   </ItemGroup>
 </Project>

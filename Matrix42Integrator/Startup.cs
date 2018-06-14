@@ -1,3 +1,5 @@
+using Matrix42Integrator.BusinessLayer;
+using Matrix42Integrator.Contracts;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -22,6 +24,8 @@ namespace Matrix42Integrator
 
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 				.AddCookie();
+
+			services.AddTransient<IDataHelper, DataHelper>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
